@@ -85,12 +85,10 @@ watch(items, newItem => {
               class="list-none flex gap-4 cursor-pointer">
               <font-awesome-icon :icon="['far', 'circle']" class="text-purple-400 text-2xl"/>
               <p class="text-gray-600">{{ label }}</p>
-                <div v-touch:swipe = "removeItems">
-                  <font-awesome-icon 
+                <div></div>
+              <font-awesome-icon @click = "removeItems"
               :icon="['fas', 'trash-can-arrow-up']"
                class="text-red-500 text-2xl"/>
-                </div>
-              
             </li>
             </div>
          </transition-group>
