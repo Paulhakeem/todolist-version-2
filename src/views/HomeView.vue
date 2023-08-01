@@ -12,11 +12,13 @@ const taggleModal = () => {
 }
 
 const addItem = () => {
-  items.value.push({id: items.value.length + 1, label: newItem.value})
+  items.value.push({id: items.value.length + 1, label: newItem.value, complete: false})
   newItem.value = ''
 }
 
-
+const removeItems = (index) => {
+  items.value.splice(index, 1)
+}
 
 
 
@@ -76,13 +78,23 @@ watch(items, newItem => {
               <p class="uppercase text-xs text-gray-400">
              today's tasks
             </p>
-
-           <div class="flex space-y-3 flex-col">
-            <li v-for="({id, label}, index) in items" :key="id" class="list-none flex gap-4">
+         <transition-group tag="ul" name="list">
+          <div class="flex space-y-3 flex-col">
+            <li 
+             v-for="({id, label}, index) in items" :key="id" 
+              class="list-none flex gap-4 cursor-pointer">
               <font-awesome-icon :icon="['far', 'circle']" class="text-purple-400 text-2xl"/>
               <p class="text-gray-600">{{ label }}</p>
+                <div v-touch:swipe = "removeItems">
+                  <font-awesome-icon 
+              :icon="['fas', 'trash-can-arrow-up']"
+               class="text-red-500 text-2xl"/>
+                </div>
+              
             </li>
             </div>
+         </transition-group>
+          
            </div>
 
 
@@ -133,3 +145,5 @@ watch(items, newItem => {
    </footer>
  </div>
 </template>
+
+
