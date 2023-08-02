@@ -19,13 +19,14 @@ defineProps({
         <div class="">
             <font-awesome-icon  
             @click="$emit('close-modal')"
-            :icon="['fas', 'xmark']" class="text-3xl text-gray-500 cursor-pointer"/>
+            :icon="['far', 'circle-xmark']" class="text-3xl text-gray-500 cursor-pointer"/>
           </div>
     <slot/>
     </div>
     </transition>
     </div>
     </transition>
+   
     
 </template>
 

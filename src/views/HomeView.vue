@@ -1,14 +1,20 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import InputModal from '../components/InputModal.vue';
+import MenuModal from '../components/MenuModal.vue';
 
 const modalActive = ref(null)
+const menuModal = ref(null)
 
 const newItem = ref('')
 const items = ref([])
 
 const taggleModal = () => {
   modalActive.value = !modalActive.value
+}
+
+const openMenu = () => {
+  menuModal.value = !menuModal.value
 }
 
 const addItem = () => {
@@ -40,9 +46,55 @@ watch(items, newItem => {
 
 <template>
  <div class="max-w-md justify-center items-center rounded-lg shadow-lg g-[#f1f2f5] m-auto pt-12">
+<MenuModal 
+ :menuModal="menuModal"
+ @close-menu="openMenu"
+>
+  <div class="relative space-x-16 mb-10">
+    <div class="text-end pt-2 mr-2">
+    </div>
+     
+      <div class="w-20 h-20 bg-gray-400 rounded-full"></div>
+       <div class="pt-2">
+        <h3 class="text-3xl font-bold text-white">
+          Hakeem Paul
+        </h3>
+       </div>
+      <div class="flex pt-6 space-x-4">
+        <font-awesome-icon :icon="['fas', 'bookmark']" class="text-2xl text-white"/>
+        <p class="text-white font-light">Create your template</p>
+      </div>
+      <div class="flex pt-6 space-x-4">
+        <font-awesome-icon :icon="['fas', 'box']" class="text-2xl text-white"/>
+        <p class="text-white font-light">Categories</p>
+      </div>
+      <div class="flex pt-6 space-x-4">
+        <font-awesome-icon :icon="['fas', 'chart-simple']" class="text-2xl text-white"/>
+        <p class="text-white font-light">Analytics</p>
+      </div>
+      <div class="flex pt-6 space-x-4">
+        <font-awesome-icon :icon="['fas', 'gear']" class="text-2xl text-white"/>
+        <p class="text-white font-light">Settings</p>
+      </div>
+      <div class="pt-10">
+        <span class="text-gray-400 font-light">Good</span>
+        <p class="text-white font-medium">Consistency</p>
+      </div>
+  </div>
+</MenuModal>
+
+
+
+
+
+
+
   <div class="justify-between flex ml-4 mr-4 p-4">
     <div>
-      <font-awesome-icon :icon="['fas', 'bars']" class="text-xl text-gray-400"/>
+      <font-awesome-icon
+       @click="openMenu"
+       :icon="['fas', 'bars']" 
+       class="text-xl text-gray-400 cursor-pointer"/>
     </div>
     <div class="justify-end">
       <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="text-xl text-gray-400"/>
@@ -52,7 +104,7 @@ watch(items, newItem => {
     </div>
   </div>
   <div class="p-2 ml-4 space-y-4">
-    <h3 class="text-2xl font-bold text-gray-800">What's up, Paul</h3>
+    <h3 class="text-2xl font-bold text-gray-800">Welcome Stranger</h3>
     <p class="uppercase text-gray-400 text-xs">categories</p>
   </div>
 
@@ -98,6 +150,13 @@ watch(items, newItem => {
 
 
 
+
+
+
+
+
+
+
            <InputModal
            :modalActive="modalActive"
            @close-modal="taggleModal">
@@ -120,19 +179,13 @@ watch(items, newItem => {
               <font-awesome-icon :icon="['fas', 'moon']" class="text-gray-400"/>
             </div>
             <div class="justify-end text-right">
-              <button @click="addItem"
+              <button 
+              @click="addItem"
                class="bg-blue-600 rounded-full p-2 w-28 text-white">
                 New task
               </button>
             </div>
           </InputModal>
-
-
-
-
-
-
-
 
    <footer>
     <div class="text-right mr-4 pb-6">
