@@ -45,7 +45,7 @@ watch(items, newItem => {
 </script>
 
 <template>
- <div class="max-w-md justify-center items-center rounded-lg shadow-lg g-[#f1f2f5] m-auto pt-12">
+ <div class="home max-w-md justify-center items-center rounded-lg shadow-lg g-[#f1f2f5] m-auto pt-12">
 <MenuModal 
  :menuModal="menuModal"
  @close-menu="openMenu"
