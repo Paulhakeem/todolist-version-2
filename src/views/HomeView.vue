@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import InputModal from '../components/InputModal.vue';
 import MenuModal from '../components/MenuModal.vue';
 
@@ -8,6 +8,9 @@ const menuModal = ref(null)
 
 const newItem = ref('')
 const items = ref([])
+const reversedItems = computed(() => {
+  return [...items.value].reverse()
+})
 
 const taggleModal = () => {
   modalActive.value = !modalActive.value
@@ -20,6 +23,9 @@ const openMenu = () => {
 const addItem = () => {
   items.value.push({id: items.value.length + 1, label: newItem.value, complete: false})
   newItem.value = ''
+}
+const favourite = (item) => {
+  item.favourite = !item.favourite
 }
 
 const removeItems = (index) => {
@@ -133,7 +139,9 @@ watch(items, newItem => {
          <transition-group tag="ul" name="list">
           <div class="flex space-y-3 flex-col">
             <li 
-             v-for="({id, label}, index) in items" :key="id" 
+             @click="favourite(item[index])"
+             :class="{strikeout: favourite}" 
+             v-for="({item, label, favourite}, index) in reversedItems" :key="id" 
               class="list-none flex gap-4 cursor-pointer">
               <font-awesome-icon :icon="['far', 'circle']" class="text-purple-400 text-2xl"/>
               <p class="text-gray-600">{{ label }}</p>
@@ -143,8 +151,12 @@ watch(items, newItem => {
                class="text-red-500 text-2xl"/>
             </li>
             </div>
+            
          </transition-group>
-          
+         <p v-if="!items.length"
+            class="text-md text-pink-600 font-medium">
+              Create Your List
+            </p>
            </div>
 
 
@@ -179,7 +191,8 @@ watch(items, newItem => {
               <font-awesome-icon :icon="['fas', 'moon']" class="text-gray-400"/>
             </div>
             <div class="justify-end text-right">
-              <button 
+              <button
+              :disabled="newItem.length === 0"
               @click="addItem"
                class="bg-blue-600 rounded-full p-2 w-28 text-white">
                 New task
